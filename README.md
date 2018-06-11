@@ -10,8 +10,7 @@
 
 ## Notes
 
-
-
 ## Resources
 
+- [JSON Placeholder API](https://jsonplaceholder.typicode.com/)
 - [Public APIs](https://github.com/toddmotto/public-apis)
