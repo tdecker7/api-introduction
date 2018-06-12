@@ -50,3 +50,7 @@ getBlogPosts(baseUrl + '1')
   // Append to the section with class "posts"
   // title
   // body
+
+
+
+// Write a function that POSTs data to the API
