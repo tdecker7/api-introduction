@@ -1,39 +1,35 @@
 var baseUrl = 'https://jsonplaceholder.typicode.com/posts/'
 
-
 // Write a function that fetches data for one blog post from the API
-
-function getBlogPosts(url) {
-  fetch(url)                          // 1. request data
-    .then(function(response) {        // 2. Receive a response
-      return response.json()          // 3. Turn response into JSON so we can work with it
-    })
-    .then(function(data) {
-      // 4. Data is now formatted to JSON so we can do whatever we want
-        // Must do it here because of async
-        // Work with data in some way
-        // Often DOM manipulation
-
-      console.log(data)
-      console.log(data.body)
-      console.log(data.title)
-      
-      // Grab the right section of the DOM to append to
-      var $posts = document.querySelector('.blog-posts')
-
-      // Create a new element
-      var newH1 = document.createElement('h1')
-
-      // Add data to the element
-      newH1.innerText = data.title
-
-      // Append element to page
-      $posts.appendChild(newH1)
-      
-    })
+/**
+ * @param {*} response
+ * @returns Promise<Object>
+ */
+function status (response) {
+  if (response.status >= 200 && response.status < 300) {
+    return Promise.resolve(response);
+  } else {
+    return Promise.reject(new Error(response.statusText))
+  }
+}
+function json (response) {
+  return response.json();
 }
 
-getBlogPosts(baseUrl + '1')
+/**
+ * @param {*} url
+ * @returns Promise of JSON formatted data array
+ */
+function getBlogPosts(url) {
+  return fetch(url)                          // 1. request data
+    .then(status) /* resolve, or reject depending on response status */
+    .then(json) /* return data in array of JSONs */
+}
+
+getBlogPosts(baseUrl).then(dataArray => {
+  var $posts = document.querySelector('.posts');
+  appendData(dataArray, $posts);
+})
 
 
 // Write a function that appends data from blog post to the page
@@ -48,8 +44,22 @@ getBlogPosts(baseUrl + '1')
 
 // Write a function that appends data from all blog posts to the page
   // Append to the section with class "posts"
-  // title
-  // body
+  // h2: title
+  // p: body
+function appendData(dataArray, $target) {
+  // var $target = document.querySelector('.posts');
+  for (var i = 0; i < dataArray.length; i++) {
+    var $li = document.createElement('li');
+    var $h2 = document.createElement('h2');
+    var $p = document.createElement('p');
+    $h2.innerText = dataArray[i].title;
+    $p.innerText = dataArray[i].body;
+    $li.appendChild($h2);
+    $li.appendChild($p);
+    $target.appendChild($li);
+    console.log($h2, $p);
+  }
+}
 
 
 
