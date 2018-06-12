@@ -19,12 +19,11 @@
     - Hides some complexity (abstraction)
   * Sending/receiving data to/from different places & perhaps applications
     - Ex. buying something with a credit card
-  * Internal 
-    * Internal
-      - Fetch
-      - DOM/Document
-    * External
-      - Places where data is held that we can request
+- Internal APIs
+  - Fetch
+  - DOM/Document
+- External
+  - Places where data is held that we can request
 
 ## Resources
 
